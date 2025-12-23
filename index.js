@@ -4,6 +4,8 @@ const morgan = require("morgan")
 
 app.use(express.json())
 
+app.use(express.static('dist'))
+
 const requestTime = (request, response, next) => {
     request.requestTime = Date()
     next()
