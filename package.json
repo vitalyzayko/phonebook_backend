@@ -1,0 +1,27 @@
+{
+  "name": "phonebook_backend",
+  "version": "0.0.1",
+  "description": "phonebook backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "build:ui": "rm -rf dist && cd ../fullstack/part2/phonebook && npm run build && cp -r dist ../../../phonebook_backend",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitalyzayko/fullstack.git"
+  },
+  "author": "Vitaly Zayko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vitalyzayko/fullstack/issues"
+  },
+  "homepage": "https://github.com/vitalyzayko/fullstack#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "morgan": "^1.10.1"
+  }
+}
