@@ -22,6 +22,7 @@
   "homepage": "https://github.com/vitalyzayko/fullstack#readme",
   "dependencies": {
     "express": "^5.2.1",
+    "mongoose": "^9.0.2",
     "morgan": "^1.10.1"
   }
 }
