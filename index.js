@@ -62,7 +62,6 @@ app.get('/api/persons/:id', (request, response) => {
   Person.findById(request.params.id)
     .then(person => {
       response.json(person)
-      mongoose.connection.close()
 
     })
   
@@ -82,7 +81,6 @@ app.delete('/api/persons/:id', (request, response) => {
   Person.findByIdAndDelete(request.params.id)
     .then(person => {
       response.json(person)
-      mongoose.connection.close()
 
     })
   
@@ -128,7 +126,6 @@ app.post('/api/persons', (request, response) => {
         console.log("added", result.name, "number", result.number, "to phonebook")
         })
       }
-    mongoose.connection.close()
   })
 
 })
