@@ -111,22 +111,34 @@ app.post('/api/persons', (request, response) => {
     })
   }
 
-  Person.find({ name: body.name })
+  /* Person.find({ name: body.name })
     .then(result => {
       if (result) {
         return response.status(400).json({
           error: "The name already exists in the phonebook. It must be unique"
         })
       } else {
+        
         const person = new Person ({
           name: body.name,
           number: body.number,
         })
+        
         person.save().then(result => {
         console.log("added", result.name, "number", result.number, "to phonebook")
         })
       }
+  }) */
+
+  const person = new Person ({
+    name: body.name,
+    number: body.number,
   })
+        
+  person.save()
+    .then(result => {
+      console.log("added", result.name, "number", result.number, "to phonebook")
+    })
 
 })
 
