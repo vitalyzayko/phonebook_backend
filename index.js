@@ -53,7 +53,7 @@ app.get('/api/persons', (request, response) => {
       }
     })
     .catch(error => {
-      console.log(error)
+      console.log("catched1:", error)
       response.status(500).end()
     })
 })
@@ -76,7 +76,7 @@ app.get('/api/persons/:id', (request, response) => {
       }
     })
     .catch(error => {
-      console.log(error)
+      console.log("catched2:", error)
       response.status(500).end()
     })
   
