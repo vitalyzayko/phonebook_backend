@@ -46,7 +46,15 @@ app.get("/", (request, response) => {
 app.get('/api/persons', (request, response) => {
   Person.find({})
     .then(persons => {
-      response.json(persons)
+      if (persons) {
+        response.json(persons)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).end()
     })
 })
 
@@ -61,8 +69,15 @@ app.get("/info", (request, response) => {
 app.get('/api/persons/:id', (request, response) => {
   Person.findById(request.params.id)
     .then(person => {
-      response.json(person)
-
+      if (person) {
+        response.json(person)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).end()
     })
   
 /* 
@@ -104,6 +119,8 @@ const generateId = () => {
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
+
+  console.log("body.name", body.name, "body.number", body.number)
   
   if (!body.name || !body.number) {
     return response.status(400).json({
@@ -111,13 +128,17 @@ app.post('/api/persons', (request, response) => {
     })
   }
 
-  /* Person.find({ name: body.name })
+  /*
+  Person.find({ "name": body.name })
     .then(result => {
+      console.log("result log", result)
       if (result) {
         return response.status(400).json({
           error: "The name already exists in the phonebook. It must be unique"
         })
-      } else {
+      } 
+      
+    else {
         
         const person = new Person ({
           name: body.name,
