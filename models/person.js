@@ -23,7 +23,7 @@ const personSchema = new mongoose.Schema({
     minLength: 8,
     validate: {
       validator: function(v) {
-        const numberRegex = /^[0-9]{2,3}-[0-9]+$/
+        const numberRegex = /\d{2,3}-\d{5,}/
         return numberRegex.test(v)
       },
       message: props => `${props.value} is not a valid phone number!` 
