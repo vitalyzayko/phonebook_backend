@@ -38,9 +38,9 @@ const person = new Person({
   mongoose.connection.close()
 }) */
 
-if (process.argv.length == 3) {
+if (process.argv.length === 3) {
   Person.find({}).then(result => {
-    console.log("phonebook:")
+    console.log('phonebook:')
     result.forEach(person => {
       console.log(person.name, person.number)
     })
@@ -49,9 +49,9 @@ if (process.argv.length == 3) {
 } else {
   person.save().then(result => {
   //console.log("result:", result)
-  console.log("added", result.name, "number", result.number, "to phonebook")
-  mongoose.connection.close()
-})
+    console.log('added', result.name, 'number', result.number, 'to phonebook')
+    mongoose.connection.close()
+  })
 }
 
 

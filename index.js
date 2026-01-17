@@ -1,9 +1,9 @@
-require("dotenv").config()
+require('dotenv').config()
 
 const express = require('express')
 const app = express()
-const morgan = require("morgan")
-const Person = require("./models/person")
+const morgan = require('morgan')
+const Person = require('./models/person')
 
 app.use(express.json())
 
@@ -12,26 +12,26 @@ app.use(express.static('dist'))
 
 
 const requestTime = (request, response, next) => {
-    request.requestTime = Date()
-    next()
+  request.requestTime = Date()
+  next()
 }
 
 app.use(requestTime)
 
 
-morgan.token('body', (request, response) => 
-  { if (request.method == "POST") {
-    return body = JSON.stringify(request.body)
-    } 
-  })
+morgan.token('body', (request, response) =>
+{ if (request.method === 'POST') {
+  return body = JSON.stringify(request.body)
+}
+})
 
 
-morgan.format("tinyBodyPost", ":method :url :status :res[content-length] - :response-time ms :body")
+morgan.format('tinyBodyPost', ':method :url :status :res[content-length] - :response-time ms :body')
 
-app.use(morgan("tinyBodyPost"))
+app.use(morgan('tinyBodyPost'))
 
-app.get("/", (request, response) => {
-    response.send("<h1> Hi, this is the development version of the Phonebook Backend </h1>")
+app.get('/', (request, response) => {
+  response.send('<h1> Hi, this is the development version of the Phonebook Backend </h1>')
 })
 
 app.get('/api/persons', (request, response, next) => {
@@ -40,18 +40,18 @@ app.get('/api/persons', (request, response, next) => {
       if (persons) {
         response.json(persons)
       } else {
-        response.status(404).send({error:"No persons found"})
+        response.status(404).send({ error:'No persons found' })
       }
     })
     .catch(error => next(error))
 })
 
-app.get("/info", (request, response) => {
+app.get('/info', (request, response) => {
   Person.find({})
     .then(persons => {
       response.send(`<h2>Phonebook has info about ${persons.length} people </h2>
                     <div> ${request.requestTime} </div>`)
-    })  
+    })
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
@@ -60,12 +60,12 @@ app.get('/api/persons/:id', (request, response, next) => {
       if (person) {
         response.json(person)
       } else {
-        response.status(404).send({error:"person not found"})
+        response.status(404).send({ error:'person not found' })
       }
     })
     .catch(error => next(error))
 
-  })
+})
 
 app.put('/api/persons/:id', (request, response, next) => {
   const { name, number } = request.body
@@ -73,7 +73,7 @@ app.put('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
     .then(person => {
       if (!person) {
-        response.status(404).send({error:"person not found"})
+        response.status(404).send({ error:'person not found' })
       }
 
       person.name = name
@@ -85,15 +85,15 @@ app.put('/api/persons/:id', (request, response, next) => {
     })
     .catch(error => next(error))
 })
-  
+
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
-    .then(person => {
-      response.status(204).send({error: "person has been deleted"})
+    .then(() => {
+      response.status(204).send({ error: 'person has been deleted' })
     })
 
     .catch(error => next(error))
-  
+
 })
 
 app.post('/api/persons', (request, response, next) => {
@@ -101,7 +101,7 @@ app.post('/api/persons', (request, response, next) => {
 
   if (!body.name) {
     return response.status(400).json({
-      error: "content is missing"
+      error: 'content is missing'
     })
   }
 
@@ -109,16 +109,16 @@ app.post('/api/persons', (request, response, next) => {
     name: body.name,
     number: body.number,
   })
-        
+
   person.save()
     .then(result => {
-      console.log("added", result.name, "number", result.number, "to phonebook")
+      console.log('added', result.name, 'number', result.number, 'to phonebook')
     })
     .catch(
       error => next(error)
     )
 
-  
+
 
 })
 
@@ -133,8 +133,8 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
-  } else if (error.name === "ValidationError") {
-    return response.status(400).json({error: error.message})
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
   }
 
   next(error)
